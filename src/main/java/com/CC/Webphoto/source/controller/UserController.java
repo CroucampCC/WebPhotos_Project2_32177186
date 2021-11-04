@@ -46,8 +46,8 @@ public class UserController {
         return new ResponseEntity<>(userService.findByUsername(principal.getName()),HttpStatus.OK);
     }
 
-    @PostMapping("/api/user/uploadPhoto")
-    public ResponseEntity<?> uploadPhoto(@RequestBody Events events){
+    @PostMapping("/api/user/uploadPhotoEvent")
+    public ResponseEntity<?> uploadPhotoEvent(@RequestBody Events events){
         events.setEventDate(LocalDateTime.now());
         return new ResponseEntity<>(eventsService.saveEvents(events),HttpStatus.CREATED);
     }

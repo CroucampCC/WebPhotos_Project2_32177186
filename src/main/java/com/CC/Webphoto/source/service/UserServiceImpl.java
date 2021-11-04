@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
+    @Override
     public Long numberOfUsers(){
         return userRepository.count();
     }
