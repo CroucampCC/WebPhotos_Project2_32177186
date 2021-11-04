@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class ServiceEventsImpl implements ServiceEvents{
+public class EventsServiceImpl implements EventsService {
 
     @Autowired
     private EventsRepository eventsRepository;

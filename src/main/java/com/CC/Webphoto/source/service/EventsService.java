@@ -4,7 +4,9 @@ import com.CC.Webphoto.source.model.Events;
 
 import java.util.List;
 
-public interface ServiceEvents {
+public interface EventsService {
+
+
     Events saveEvents(Events events);
 
     Long numberOfEvents();
