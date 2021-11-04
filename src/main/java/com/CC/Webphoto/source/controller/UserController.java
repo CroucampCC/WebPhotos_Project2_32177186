@@ -1,5 +1,6 @@
 package com.CC.Webphoto.source.controller;
 
+import com.CC.Webphoto.source.jwt.JwtTokenProvider;
 import com.CC.Webphoto.source.model.Events;
 import com.CC.Webphoto.source.model.Role;
 import com.CC.Webphoto.source.model.User;
@@ -9,6 +10,8 @@ import com.CC.Webphoto.source.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +22,10 @@ import java.time.LocalDateTime;
 
 @RestController
 public class UserController {
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @Autowired
     private UserService userService;
 
@@ -40,10 +47,13 @@ public class UserController {
     @GetMapping("/api/user/login")
     public ResponseEntity<?> getUser(Principal principal){
         //principal =
-        if(principal == null || principal.getName() == null){
+        if(principal == null){
             return ResponseEntity.ok(principal);
         }
-        return new ResponseEntity<>(userService.findByUsername(principal.getName()),HttpStatus.OK);
+        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
+        User user = userService.findByUsername(authenticationToken.getName());
+        user.setToken(jwtTokenProvider.generateToken(authenticationToken));
+        return new ResponseEntity<>(user ,HttpStatus.OK);
     }
 
     @PostMapping("/api/user/uploadPhotoEvent")
