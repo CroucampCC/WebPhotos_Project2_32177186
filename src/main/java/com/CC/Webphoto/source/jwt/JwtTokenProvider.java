@@ -29,7 +29,7 @@ public class JwtTokenProvider {
     private String jwtHeaderString;
 
     @Value("$(app.jwt.expiration-in-ms)")
-    private Long jwtExpirationInMS;
+    private String jwtExpirationInMS;
 
     public String generateToken(Authentication auth){
         String authorities = auth.getAuthorities().stream()
