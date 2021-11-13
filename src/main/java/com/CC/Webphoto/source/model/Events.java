@@ -26,3 +26,6 @@ public class Events {
     @Column(name = "event_date")
     private LocalDateTime eventDate;
 }
+
+
+//new frontend changes made
