@@ -33,7 +33,21 @@ class LoginPage extends React.Component{
         const { user } = this.state;
 
         // stop here if form is invalid
+        if (!(user.username && user.password)) {
+            return;
+        }
 
+        this.setState({ loading: true });
+        UserService.login(user)
+            .then(
+                data => {
+                    this.props.history.push("/home");
+                },
+                error => {
+                    console.log(error);
+                    this.setState({ errorMessage: "Username or password is not valid.", loading: false });
+                }
+            );
     }
 
     render() {
