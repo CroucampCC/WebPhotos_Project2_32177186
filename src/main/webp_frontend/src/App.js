@@ -20,6 +20,7 @@ import {Role} from './models/role';
 import UserService from './services/user.service';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser, faUserPlus, faSignInAlt, faHome, faSignOutAlt, faUserShield} from '@fortawesome/free-solid-svg-icons';
+import CreateUser from "./components/createuser/CreateUser";
 
 class App extends React.Component{
   constructor(props){
@@ -116,6 +117,7 @@ class App extends React.Component{
                 <AuthGuard path="/admin" roles={[Role.ADMIN]} component={AdminPage}/>
                 <Route exact path="/404" component={NotFound}/>
                 <Route exact path="/401" component={Unauthorized}/>
+                <Route exact path="/create_user" component={CreateUser}/>
                 <Redirect from='*' to='/404' />
               </Switch>
             </div>

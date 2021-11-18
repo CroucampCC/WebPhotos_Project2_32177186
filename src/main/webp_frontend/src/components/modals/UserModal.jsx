@@ -4,7 +4,7 @@ import AdminService from '../../services/admin.service';
 import UserService from '../../services/user.service';
 
 import  $ from  'jquery';
-import 'bootstrap';
+
 
 
 
@@ -93,12 +93,16 @@ class UserModal extends React.Component {
     render(){
         const { user, submitted, loading, error } = this.state;
         return (
+
+
+
             <div>
                 {user &&
                 <div className="modal fade" id="userModal" tabIndex="-1" ref={modal=> this.modal = modal} role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <form name="form-user-update"  onSubmit={(e)=>this.handleSubmit(e)}>
+
                                 <div className="modal-header">
                                     <h5 className="modal-title">User Details</h5>
                                     <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
