@@ -19,17 +19,17 @@ import java.util.stream.Collectors;
 @Component
 public class JwtTokenProvider {
 
-    @Value("$(app.jwt.secret)")
+    @Value("${app.jwt.secret}")
     private String jwtSecret;
 
-    @Value("$(app.jwt.token.prefix)")
+    @Value("${app.jwt.token.prefix}")
     private String jwtTokenPrefix;
 
-    @Value("$(app.jwt.header.string)")
+    @Value("${app.jwt.header.string}")
     private String jwtHeaderString;
 
-    @Value("$(app.jwt.expiration-in-ms)")
-    private String jwtExpirationInMS;
+    @Value("${app.jwt.expiration-in-ms}")
+    private Long jwtExpirationInMs;
 
     public String generateToken(Authentication auth){
         String authorities = auth.getAuthorities().stream()
@@ -37,9 +37,9 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining());
 
         return Jwts.builder().setSubject(auth.getName())
-                .claim("roles",authorities)
-                .setExpiration(new Date(System.currentTimeMillis()+jwtExpirationInMS))
-                .signWith(SignatureAlgorithm.HS512,jwtSecret).compact();
+                .claim("roles", authorities)
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
     }
 
     public Authentication getAuthentication(HttpServletRequest request){
@@ -53,7 +53,7 @@ public class JwtTokenProvider {
                 .map(role -> role.startsWith("ROLE_")?role:"ROLE_"+role)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        return username!=null ? new UsernamePasswordAuthenticationToken(username,null,authorities):null;
+        return username!= null ? new UsernamePasswordAuthenticationToken(username, null, authorities): null;
     }
 
     public boolean validateToken(HttpServletRequest request){
@@ -69,12 +69,14 @@ public class JwtTokenProvider {
     }
 
     private String resolveToken(HttpServletRequest req){
+        //Bearer key...
         String bearerToken = req.getHeader(jwtHeaderString);
-        if(bearerToken != null && bearerToken.startsWith(jwtTokenPrefix)){
+        if(bearerToken!=null && bearerToken.startsWith(jwtTokenPrefix)){
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;
     }
+
 
 
 }

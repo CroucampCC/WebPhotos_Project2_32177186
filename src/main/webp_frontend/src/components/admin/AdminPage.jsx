@@ -22,15 +22,12 @@ class AdminPage extends React.Component {
             showDeleteModal: false,
         };
 
-        //(user, isSucceed, isUpdate)=>this.onChildUpdate(user, isSucceed, isUpdate);
-        //this.onChildUpdate = this.onChildUpdate.bind(this);
-        //this.onDeleteChildUpdate = this.onDeleteChildUpdate.bind(this);
 
     }
 
     componentDidMount() {
         this.setState({
-            Users: { loading: true },
+            users: { loading: true },
         });
         AdminService.findAllUsers()
             .then(users => {
@@ -40,7 +37,7 @@ class AdminPage extends React.Component {
     }
 
     createUserRequest() {
-        this.setState({ selectedUser: new User('','','','','','','',-1,'') });
+        this.setState({ selectedUser: new User('','','','',-1) });
         this.setState({
             showModal: true
         });
@@ -157,11 +154,8 @@ class AdminPage extends React.Component {
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">FirstName</th>
-                                    <th scope="col">LastName</th>
+                                    <th scope="col">Name</th>
                                     <th scope="col">UserName</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">PhoneNumber</th>
                                     <th scope="col">Role</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -170,11 +164,8 @@ class AdminPage extends React.Component {
                                 {users.map((user, index) =>
                                     <tr key={user.id}>
                                         <th scope="row">{index}</th>
-                                        <td>{user.firstName}</td>
-                                        <td>{user.lastName}</td>
+                                        <td>{user.name}</td>
                                         <td>{user.username}</td>
-                                        <td>{user.emailAddress}</td>
-                                        <td>{user.phoneNumber}</td>
                                         <td>{user.role}</td>
                                         <td>
                                             <button className="btn btn-warning" onClick={() => this.editUserRequest(user)}><FontAwesomeIcon icon={faPen} /></button>

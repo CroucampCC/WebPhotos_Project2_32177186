@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {BehaviorSubject} from 'rxjs';
 
-const API_URL = 'http://localhost:8080/api/user/';
+const API_URL = 'http://localhost:9000/api/user/';
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 class UserService {
@@ -40,15 +40,16 @@ class UserService {
             {headers: {"Content-Type":"application/json; charset=UTF-8"}});
     }
 
-    findAllPhotos(){
-        return axios.get(API_URL + 'photos',
-            {headers: {"Content-Type":"application/json; charset=UTF-8"}} );
+    findAllProducts() {
+        return axios.get(API_URL + "products",
+            {headers: {"Content-Type":"application/json; charset=UTF-8"}});
     }
 
-    uploadPhotos(events){
-        return axios.post(API_URL + "uploadPhotoEvent",
+    purchaseProduct(transaction) {
+        return axios.post(API_URL + "purchase", JSON.stringify(transaction),
             {headers: {"Content-Type":"application/json; charset=UTF-8"}});
     }
 
 }
+
 export default new UserService();

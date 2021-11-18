@@ -1,7 +1,13 @@
+
 import React from 'react';
 import AdminService from '../../services/admin.service';
 import UserService from '../../services/user.service';
-import $ from 'jquery';
+
+import  $ from  'jquery';
+import 'bootstrap';
+
+
+
 
 class UserModal extends React.Component {
 
@@ -19,12 +25,12 @@ class UserModal extends React.Component {
     componentDidMount() {
         const { handleModalCloseClick } = this.props;
         $(this.modal).modal('show');
-        $(this.modal).on('hidden.bs.modal', handleModalCloseClick);
+       $(this.modal).on('hidden.bs.modal', handleModalCloseClick);
     }
 
     handleCloseClick() {
         const { handleModalCloseClick } = this.props;
-        $(this.modal).modal('hide');
+      $(this.modal).modal('hide');
         handleModalCloseClick();
     }
 

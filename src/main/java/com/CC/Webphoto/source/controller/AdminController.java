@@ -1,10 +1,10 @@
 package com.CC.Webphoto.source.controller;
 
-import com.CC.Webphoto.source.model.Photos;
+import com.CC.Webphoto.source.model.Product;
 import com.CC.Webphoto.source.model.StringResponse;
 import com.CC.Webphoto.source.model.User;
-import com.CC.Webphoto.source.service.EventsService;
-import com.CC.Webphoto.source.service.PhotosService;
+import com.CC.Webphoto.source.service.ProductService;
+import com.CC.Webphoto.source.service.TransactionService;
 import com.CC.Webphoto.source.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,21 +16,23 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
     @Autowired
-    private EventsService eventsService;
+    private ProductService productService;
+
     @Autowired
-    private PhotosService photosService;
+    private TransactionService transactionService;
 
     @PutMapping("/api/admin/user-update")
-    public ResponseEntity<?> updateUser(@RequestBody User user){
-        User existUser = userService.findByUsername(user.getUserName());
-
-        if(existUser!=null && (existUser.getId() != user.getId())){
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        User existUser = userService.findByUsername(user.getUsername());
+        if (existUser != null && !existUser.getId().equals(user.getId())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(userService.updateUser(user),HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.CREATED);
     }
 
+    //This can be also @DeleteMapping.
     @PostMapping("/api/admin/user-delete")
     public ResponseEntity<?> deleteUser(@RequestBody User user){
         userService.deleteUser(user.getId());
@@ -39,53 +41,57 @@ public class AdminController {
 
     @GetMapping("/api/admin/user-all")
     public ResponseEntity<?> findAllUsers(){
-        return new ResponseEntity<>(userService.findAllUsers(),HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/api/admin/user-number")
     public ResponseEntity<?> numberOfUsers(){
         Long number = userService.numberOfUsers();
         StringResponse response = new StringResponse();
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        response.setResponse(number.toString());
+        //to return it, we will use String Response because long is not a suitable response for rest api
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PostMapping("/api/admin/product-create")
+    public ResponseEntity<?> createProduct(@RequestBody Product product){
+        return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 
-    @PostMapping("/api/admin/photos-create")
-    public ResponseEntity<?> uploadPhoto(@RequestBody Photos photos){
-        return new ResponseEntity<>(photosService.savePhotos(photos),HttpStatus.CREATED);
+    @PutMapping("/api/admin/product-update")
+    public ResponseEntity<?> updateProduct(@RequestBody Product product){
+        return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.CREATED);
     }
 
-    @PutMapping("/api/admin/photos-update")
-    public ResponseEntity<?> updatePhotos(@RequestBody Photos photos){
-        return new ResponseEntity<>(photosService.updatePhotos(photos),HttpStatus.CREATED);
-    }
-
-    @PostMapping("/api/admin/photos-delete")
-    public ResponseEntity<?> deletePhotos(@RequestBody Photos photos){
-        photosService.deletePhotos(photos.getId());
+    //This can be also @DeleteMapping.
+    @PostMapping("/api/admin/product-delete")
+    public ResponseEntity<?> deleteProduct(@RequestBody Product product){
+        productService.deleteProduct(product.getId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/api/admin/photos-all")
-    public ResponseEntity<?> findAllPhotos(){
-        return new ResponseEntity<>(photosService.findAllPhotos(),HttpStatus.OK);
+    @GetMapping("/api/admin/product-all")
+    public ResponseEntity<?> findAllProducts(){
+        return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/admin/photos-number")
-    public ResponseEntity<?> numberOfPhotos(){
-        Long number = photosService.numberOfPhotos();
+    @GetMapping("/api/admin/product-number")
+    public ResponseEntity<?> numberOfProducts(){
+        Long number = productService.numberOfProducts();
         StringResponse response = new StringResponse();
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        response.setResponse(number.toString());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/api/admin/events-all")
-    public ResponseEntity<?> findAllEvents(){
-        return new ResponseEntity<>(eventsService.findAllEvents(),HttpStatus.OK);
+    @GetMapping("/api/admin/transaction-all")
+    public ResponseEntity<?> findAllTransactions(){
+        return new ResponseEntity<>(transactionService.findAllTransactions(), HttpStatus.OK);
     }
 
-    @GetMapping("/api/admin/events-number")
-    public ResponseEntity<?> NumberOfEvents(){
-        Long number = eventsService.numberOfEvents();
+    @GetMapping("api/admin/transaction-number")
+    public ResponseEntity<?> numberOfTransactions(){
+        Long number = transactionService.numberOfTransactions();
         StringResponse response = new StringResponse();
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        response.setResponse(number.toString());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

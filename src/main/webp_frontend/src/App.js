@@ -1,4 +1,5 @@
 import React from 'react';
+
 import logo from './logo.svg';
 import './App.css';
 import {Router, Route, Link, Switch, Redirect} from 'react-router-dom';
@@ -33,7 +34,7 @@ class App extends React.Component{
   }
 
   componentWillMount() {
-    this.unlisten = this.state.history.listen((location , action) => {
+    this.unlisten = this.state.history.listen((location, action) => {
       this.setState({currentLocation: location.pathname})
     });
   }
@@ -77,12 +78,12 @@ class App extends React.Component{
                 React
               </a>
               <div className="navbar-nav mr-auto">
-                <Link to="/home" className={currentLocation == '/home' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faHome}/> Home</Link>
-                {this.state.isAdmin && <Link to="/admin" className={currentLocation == '/admin' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faUserShield}/> Admin</Link>}
+                <Link to="/home" className={currentLocation === '/home' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faHome}/> Home</Link>
+                {this.state.isAdmin && <Link to="/admin" className={currentLocation === '/admin' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faUserShield}/> Admin</Link>}
               </div>
 
               <div className="navbar-nav ml-auto">
-                <Link to="/profile" className={currentLocation == '/profile' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faUser}/> {currentUser.name}</Link>
+                <Link to="/profile" className={currentLocation === '/profile' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faUser}/> {currentUser.name}</Link>
                 <a onClick={()=>this.logout()} className="nav-item nav-link"><FontAwesomeIcon icon={faSignOutAlt}/> LogOut</a>
               </div>
             </nav>
@@ -95,12 +96,12 @@ class App extends React.Component{
                 React
               </a>
               <div className="navbar-nav mr-auto">
-                <Link to="/home" className={currentLocation == '/home' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faHome}/> Home</Link>
+                <Link to="/home" className={currentLocation === '/home' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faHome}/> Home</Link>
               </div>
 
               <div className="navbar-nav ml-auto">
-                <Link to="/register" className={currentLocation == '/register' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faUserPlus}/> Register</Link>
-                <Link to="/login" className={currentLocation == '/login' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
+                <Link to="/register" className={currentLocation === '/register' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faUserPlus}/> Register</Link>
+                <Link to="/login" className={currentLocation === '/login' ? 'nav-item nav-link active': 'nav-item nav-link'}><FontAwesomeIcon icon={faSignInAlt}/> Login</Link>
               </div>
             </nav>
             }

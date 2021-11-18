@@ -7,24 +7,24 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "events")
-public class Events {
+@Table(name="transaction")
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "photo_id", referencedColumnName = "id")
-    private Photos photo;
+    @JoinColumn(name="product_id", referencedColumnName = "id")
+    private Product product;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(name = "event_date")
-    private LocalDateTime eventDate;
+    @Column(name="purchase_date")
+    private LocalDateTime purchaseDate;
 }
 
 
-//new frontend changes made
+

@@ -1,12 +1,12 @@
 package com.CC.Webphoto.source;
 
-import org.junit.runner.RunWith;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 
 
-@RunWith(SpringRunner.class)
+
 @SpringBootApplication
 public class WebphotosApplication {
 
