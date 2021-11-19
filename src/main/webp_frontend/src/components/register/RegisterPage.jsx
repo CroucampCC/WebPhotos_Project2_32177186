@@ -4,12 +4,12 @@ import {User} from '../../models/user';
 import './RegisterPage.css';
 
 class RegisterPage extends React.Component {
+    userRole;
+
     constructor(props){
         super(props);
 
-        if(UserService.currentUserValue){
-            this.props.history.push('/');
-        }
+
 
         this.state = {
             user: new User('','',''),
@@ -39,7 +39,14 @@ class RegisterPage extends React.Component {
         UserService.register(user)
             .then(
                 data => {
-                    this.props.history.push("/login");
+                    this.userRole =  UserService.currentUserValue;
+                    if( this.userRole === "USER"){
+                        this.props.history.push("/login");
+                    }
+                    else{
+                        this.props.history.push("/admin");
+                    }
+
                 },
                 error => {
                     if(error.response.status === 409){

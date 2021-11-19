@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {UserModal} from '../modals/UserModal';
 import {DeleteModal} from '../modals/DeleteModal';
+import {Link} from "react-router-dom";
 
 class AdminPage extends React.Component {
 
@@ -21,6 +22,8 @@ class AdminPage extends React.Component {
             showModal: false,
             showDeleteModal: false,
         };
+
+        this.deleteUserRequest = this.deleteUserRequest.bind(this);
 
 
     }
@@ -52,11 +55,10 @@ class AdminPage extends React.Component {
     }
 
     deleteUserRequest(user){
-        console.log(user);
-        this.setState({ selectedUser: user });
-        this.setState({
-            showDeleteModal: true
+        AdminService.deleteUser(user).then(res =>{
+            this.setState({users: this.state.users.filter(user => user !== user)});
         });
+        window.location.reload(true);
     }
 
     handleModalCloseClick() {
@@ -122,6 +124,8 @@ class AdminPage extends React.Component {
         userList[itemIndex] = user;
     }
 
+
+
     render() {
         const { user, users, infoMessage } = this.state;
         return (
@@ -144,7 +148,7 @@ class AdminPage extends React.Component {
                                     <h3 className="panel-title">All Users</h3>
                                 </div>
                                 <div className="col col-xs-6 text-right">
-                                    <button type="button" className="btn btn-primary" onClick={() => this.createUserRequest()}>Create New User</button>
+                                    <Link to={"/register"} className="btn btn-primary"> Create User</Link>
                                 </div>
                             </div>
                         </div>
@@ -170,6 +174,7 @@ class AdminPage extends React.Component {
                                         <td>
                                             <button className="btn btn-warning" onClick={() => this.editUserRequest(user)}><FontAwesomeIcon icon={faPen} /></button>
                                             <button className="btn btn-danger" onClick={() => this.deleteUserRequest(user)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+
                                         </td>
                                     </tr>
                                 )}
