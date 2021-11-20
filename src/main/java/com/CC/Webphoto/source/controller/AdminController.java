@@ -7,9 +7,11 @@ import com.CC.Webphoto.source.service.ProductService;
 import com.CC.Webphoto.source.service.TransactionService;
 import com.CC.Webphoto.source.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class AdminController {
@@ -23,7 +25,7 @@ public class AdminController {
     @Autowired
     private TransactionService transactionService;
 
-    @PutMapping("/api/admin/user-update")
+    @PutMapping("/api/admin/{username}")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
         User existUser = userService.findByUsername(user.getUsername());
         if (existUser != null && !existUser.getId().equals(user.getId())) {
@@ -31,6 +33,8 @@ public class AdminController {
         }
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.CREATED);
     }
+
+
 
     //This can be also @DeleteMapping.
     @PostMapping("/api/admin/user-delete")

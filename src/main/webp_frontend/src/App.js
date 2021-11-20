@@ -120,7 +120,7 @@ class App extends React.Component{
                 <Route exact path="/404" component={NotFound}/>
                 <Route exact path="/401" component={Unauthorized}/>
                 <Route exact path="/create_user" component={CreateUser}/>
-                <Route exact path="/update_User/:id" component={UpdateUser}/>
+                <Route exact path="/user-update/:username" component={UpdateUser}/>
                 <Redirect from='*' to='/404' />
               </Switch>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Component} from 'react';
 import './AdminPage.css';
 import AdminService from '../../services/admin.service';
 import UserService from '../../services/user.service';
@@ -8,8 +9,10 @@ import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {UserModal} from '../modals/UserModal';
 import {DeleteModal} from '../modals/DeleteModal';
 import {Link} from "react-router-dom";
+import $ from 'jquery';
 
 class AdminPage extends React.Component {
+    selectedUser;
 
     constructor(props) {
         super(props);
@@ -24,6 +27,7 @@ class AdminPage extends React.Component {
         };
 
         this.deleteUserRequest = this.deleteUserRequest.bind(this);
+        this.editUserRequest = this.editUserRequest.bind(this);
 
 
     }
@@ -46,12 +50,8 @@ class AdminPage extends React.Component {
         });
     }
 
-    editUserRequest(user) {
-        console.log(user);
-        this.setState({ selectedUser: user });
-        this.setState({
-            showModal: true
-        });
+    editUserRequest(username) {
+        this.props.history.push(`/user-update/${username}`);
     }
 
     deleteUserRequest(user){
@@ -172,7 +172,7 @@ class AdminPage extends React.Component {
                                         <td>{user.username}</td>
                                         <td>{user.role}</td>
                                         <td>
-                                            <button className="btn btn-warning" onClick={() => this.editUserRequest(user)}><FontAwesomeIcon icon={faPen} /></button>
+                                            <button className="btn btn-warning" onClick={() => this.editUserRequest(user.username)}><FontAwesomeIcon icon={faPen} /></button>
                                             <button className="btn btn-danger" onClick={() => this.deleteUserRequest(user)}><FontAwesomeIcon icon={faTrashAlt} /></button>
 
                                         </td>

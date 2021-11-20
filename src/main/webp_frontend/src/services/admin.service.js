@@ -25,6 +25,11 @@ class AdminService {
     findAllUsers(){
         return axios.get(API_URL + "user-all", {headers: this.headers});
     }
+
+    findUserByUsername(username){
+        return axios.get(API_URL + "user" + '/' + username);
+    }
+
 }
 
 export default new AdminService();
