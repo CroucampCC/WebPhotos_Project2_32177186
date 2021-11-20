@@ -22,6 +22,8 @@
                                      name VARCHAR(255) NOT NULL,
                                      price DOUBLE,
                                      explanation VARCHAR(1000),
+                                     url VARCHAR(255) NOT NULL,
+                                     location VARCHAR(255) NOT NULL,
                                      CONSTRAINT PK_id PRIMARY KEY (id)
             );
         </sql>
@@ -31,26 +33,26 @@
     </changeSet>
     <changeSet id="3" author="sha">
         <sql>
-            INSERT INTO product (name, price, explanation) values("Product 1", 19.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 2", 10.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 3", 14.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 4", 15.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 5", 69.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 6", 59.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 7", 49.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 8", 39.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 9", 29.99,
-                                                                  "Product is so");
-            INSERT INTO product (name, price, explanation) values("Product 10", 9.99,
-                                                                  "Product is so");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                  "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
+            INSERT INTO product (name, price, explanation,url,location) values("Product 1", 19.99,
+                                                                               "Product is so","www.","nwu");
         </sql>
         <rollback>
             TRUNCATE TABLE product;
