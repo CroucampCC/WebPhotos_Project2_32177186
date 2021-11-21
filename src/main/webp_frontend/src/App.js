@@ -111,9 +111,9 @@ class App extends React.Component{
             }
             <div className="container">
               <Switch>
-                <Route exact path="/" component={HomePage}/>
-                <Route exact path="/home" component={HomePage}/>
                 <Route exact path="/login" component={LoginPage}/>
+                <Route exact path="/"  component={HomePage}/>
+                <Route exact path="/home"  component={HomePage}/>
                 <Route exact path="/register" component={RegisterPage}/>
                 <AuthGuard path="/profile" roles={[Role.ADMIN, Role.USER]} component={ProfilePage}/>
                 <Route exact path="/detail/:id" component={DetailPage}/>

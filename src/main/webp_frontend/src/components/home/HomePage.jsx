@@ -8,6 +8,7 @@ import {storage} from '../firebase';
 import AdminService from "../../services/admin.service";
 import {Link} from "react-router-dom";
 import {Product} from "../../models/product";
+import {filter} from "rxjs";
 
 class HomePage extends React.Component {
     products;
@@ -17,6 +18,8 @@ class HomePage extends React.Component {
     constructor(props) {
         super(props);
 
+
+
         this.state = {
             selectedProduct: new Product(),
             products: [],
@@ -25,7 +28,8 @@ class HomePage extends React.Component {
             currentUser: new User(),
             image: null,
             url: '',
-            setQ:''
+            setQ:'',
+            user: UserService.currentUserValue
         };
 
 
@@ -37,6 +41,8 @@ class HomePage extends React.Component {
 
 
     }
+
+    r
 
 
     /*deleteProductRequest = (product) => {
@@ -120,8 +126,20 @@ class HomePage extends React.Component {
         this.props.history.push('/detail/' + product.id);
     }
 
+    handleRemove = (id) =>{
+        const productFilter = this.state.products.filter((product)=>product.id !== id);
+        window.location.reload(true);
+    };
+
+
     render() {
+        if(!UserService.currentUserValue) {
+            return this.props.history.push("/login");
+        }
+
+
         const {products, infoMessage, errorMessage} = this.state;
+
         return (
 
             <div className="col-md-12">
@@ -129,6 +147,7 @@ class HomePage extends React.Component {
                     <input type="file" className={"btn btn-warning"} onChange={this.handleChange}/>
                     <button className="btn btn-info" onClick={this.handleUpload}>Upload Photos</button>
                     <Link to={"/product-create"} className="btn btn-primary"> Create Photo data</Link>
+                    <td><input type={"text"} value={""} onChange={(e) => this.setQ(e.target.value)}/></td>
                 </tr>
 
                 {infoMessage &&
@@ -149,7 +168,7 @@ class HomePage extends React.Component {
 
                 }
                 <div>
-                    <input type={"text"} value={""} onChange={(e) => this.setQ(e.target.value)}/>
+
                 </div>
                 {products.loading && <em> Loading products...</em>}
                 {products.length &&
@@ -180,9 +199,10 @@ class HomePage extends React.Component {
 
                             </td>
                             <td>
-                                <button className="btn btn-danger" onClick={() => this.deleteProductRequest(product.id)}>
+                                <button className="btn btn-danger" onClick={() => this.handleRemove(product.id)}>
                                     <FontAwesomeIcon icon={faTrashAlt}/></button>
                             </td>
+
                         </tr>
                     )}
                     </tbody>
