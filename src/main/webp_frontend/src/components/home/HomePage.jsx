@@ -5,61 +5,102 @@ import {Transaction} from '../../models/transaction';
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {storage} from '../firebase';
+import AdminService from "../../services/admin.service";
+import {Link} from "react-router-dom";
+import {Product} from "../../models/product";
 
-class HomePage extends React.Component{
+class HomePage extends React.Component {
     products;
     image;
 
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
+            selectedProduct: new Product(),
             products: [],
             errorMessage: '',
             infoMessage: '',
             currentUser: new User(),
-            image:null,
-            url :''
+            image: null,
+            url: '',
+            setQ:''
         };
 
 
-        this.handleChange =this.handleChange.bind(this);
+
+
+        this.handleChange = this.handleChange.bind(this);
         this.handleUpload = this.handleUpload.bind(this);
+        this.deleteProductRequest = this.deleteProductRequest.bind(this);
 
 
     }
 
 
-    handleChange = e =>{
-        if(e.target.files[0]){
+    /*deleteProductRequest = (product) => {
+        UserService.deleteProduct(product).then((response) => {
+            this.getAllProducts();
+
+        }).catch((error) => {
+            console.log(error);
+        })
+    }*/
+
+    createProductRequest() {
+        this.setState({ selectedProduct: new Product('','','','',-1) });
+        this.setState({
+            showModal: true
+        });
+    }
+
+      deleteProductRequest(productID){
+          console.log(productID)
+         UserService.deleteProduct(productID).then(res =>{
+              this.setState({products: this.state.products.filter(product => product !== product)});
+          });
+          window.location.reload(true);
+      }
+
+
+    handleChange = e => {
+        if (e.target.files[0]) {
             const image = e.target.files[0];
-            this.setState(() =>({image}));
+            this.setState(() => ({image}));
         }
     }
 
 
-
     handleUpload = () => {
         const {image} = this.state;
-        const uploadTask = storage.ref(`images/${image.name}`).put(image);
-        uploadTask.on("state_changed",snapshot =>{},error => {
+        const uploadTask = storage.ref(image.name).put(image);
+        uploadTask.on("state_changed", snapshot => {
+        }, error => {
             console.log(error);
-        },()=>{
+        }, () => {
             storage
-                .ref("images")
+                .ref()
                 .child(image.name)
                 .getDownloadURL()
-                .then(url =>{
+                .then(url => {
                     console.log(url);
                 })
         })
     };
 
+    getAllProducts = () => {
+        UserService.findAllProducts().then(products => {
+            this.setState({products: products.data});
+        });
+
+    }
+
+
 
 
     componentDidMount() {
-        UserService.currentUser.subscribe(data =>{
+        UserService.currentUser.subscribe(data => {
             this.setState({
                 currentUser: data
             })
@@ -69,31 +110,14 @@ class HomePage extends React.Component{
             products: {loading: true}
         });
 
+        this.getAllProducts();
 
-        UserService.findAllProducts().
-        then(products => {
-            this.setState({products: products.data});
-        });
     }
 
-    purchaseProduct(product) {
-        if(!this.state.currentUser){
-            this.setState({errorMessage: "You should sign in to purchase a product"});
-            return;
-        }
-
-        var transaction = new Transaction(this.state.currentUser, product);
-        UserService.purchaseProduct(transaction)
-            .then(data => {
-                this.setState({infoMessage: "Mission is completed."});
-            },error => {
-                this.setState({errorMessage: "Unexpected error occurred."});
-            });
-    }
 
     detail(product) {
         localStorage.setItem('currentProduct', JSON.stringify(product));
-        this.props.history.push('/detail/'+product.id);
+        this.props.history.push('/detail/' + product.id);
     }
 
     render() {
@@ -104,6 +128,7 @@ class HomePage extends React.Component{
                 <tr>
                     <input type="file" className={"btn btn-warning"} onChange={this.handleChange}/>
                     <button className="btn btn-info" onClick={this.handleUpload}>Upload Photos</button>
+                    <Link to={"/product-create"} className="btn btn-primary"> Create Photo data</Link>
                 </tr>
 
                 {infoMessage &&
@@ -121,7 +146,11 @@ class HomePage extends React.Component{
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 }
+                <div>
+                    <input type={"text"} value={""} onChange={(e) => this.setQ(e.target.value)}/>
+                </div>
                 {products.loading && <em> Loading products...</em>}
                 {products.length &&
                 <table className="table table-striped">
@@ -142,24 +171,27 @@ class HomePage extends React.Component{
                             <th scope="row">{index + 1}</th>
                             <td>{product.name}</td>
                             <td>{'R ' + product.price}</td>
-                            <td>{
-                                <img src={product.url} height="25%" width={"25%"}/>}</td>
+                            <td>
+                                <img src={product.url} height="25%" width={"25%"}/>
+                            </td>
                             <td>{product.location}</td>
                             <td>
-                                <button className="btn btn-info" onClick={() => this.detail(product)}>Detail</button>
+                                <button className="btn btn-info" onClick={() => this.detail(product)}>Download</button>
+
                             </td>
                             <td>
-                                <button className="btn btn-danger" onClick={() => this.purchaseProduct(product)}><FontAwesomeIcon icon={faTrashAlt} /></button>
+                                <button className="btn btn-danger" onClick={() => this.deleteProductRequest(product.id)}>
+                                    <FontAwesomeIcon icon={faTrashAlt}/></button>
                             </td>
                         </tr>
-                    )
-                    }
+                    )}
                     </tbody>
                 </table>
                 }
             </div>
         );
     }
+
 
 }
 

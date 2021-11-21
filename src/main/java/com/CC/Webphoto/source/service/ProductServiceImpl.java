@@ -40,5 +40,6 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findAllProducts(){
         return productRepository.findAll();
     }
+
 }
 

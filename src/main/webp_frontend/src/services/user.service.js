@@ -2,9 +2,13 @@ import axios from 'axios';
 import {BehaviorSubject} from 'rxjs';
 
 const API_URL = 'http://localhost:9000/api/user/';
+
 const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 class UserService {
+
+
+
 
     get currentUserValue() {
         return currentUserSubject.value;
@@ -48,6 +52,14 @@ class UserService {
     purchaseProduct(transaction) {
         return axios.post(API_URL + "purchase", JSON.stringify(transaction),
             {headers: {"Content-Type":"application/json; charset=UTF-8"}});
+    }
+
+    deleteProduct(productID) {
+        return axios.post(API_URL + "product-delete", JSON.stringify(productID),{headers: {"Content-Type":"application/json; charset=UTF-8"}});
+    }
+
+    createProduct(product) {
+        return axios.post(API_URL + "product-create", JSON.stringify(product),{headers: {"Content-Type":"application/json; charset=UTF-8"}});
     }
 
 }

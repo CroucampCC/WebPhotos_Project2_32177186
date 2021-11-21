@@ -75,4 +75,14 @@ public class UserController {
     public ResponseEntity<?> createProduct(@RequestBody Product product){
         return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
+
+    @PostMapping("/api/user/product-delete")
+    public ResponseEntity<?> deleteProduct(@RequestBody Long id){
+        productService.deleteProduct(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
+
 }

@@ -63,11 +63,11 @@ public class AdminController {
     }
 
     //This can be also @DeleteMapping.
-    @PostMapping("/api/admin/product-delete")
+    /*@PostMapping("/api/admin/product-delete")
     public ResponseEntity<?> deleteProduct(@RequestBody Product product){
         productService.deleteProduct(product.getId());
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("/api/admin/product-all")
     public ResponseEntity<?> findAllProducts(){

@@ -184,9 +184,9 @@ class AdminPage extends React.Component {
                     </div>
                     }
                 </div>
-                {this.state.showModal ? (<UserModal ref="child" onChildUpdate={(user, isSucceed, isUpdate)=>this.onChildUpdate(user, isSucceed, isUpdate)} handleModalCloseClick={()=>this.handleModalCloseClick()} user={this.state.selectedUser}/>) : null}
+               {/* {this.state.showModal ? (<UserModal ref="child" onChildUpdate={(user, isSucceed, isUpdate)=>this.onChildUpdate(user, isSucceed, isUpdate)} handleModalCloseClick={()=>this.handleModalCloseClick()} user={this.state.selectedUser}/>) : null}
                 {this.state.showDeleteModal ? (<DeleteModal ref="deleteChild" onDeleteChildUpdate={(user, isSucceed)=>this.onDeleteChildUpdate(user, isSucceed)} handleDeleteModalCloseClick={()=>this.handleDeleteModalCloseClick()} user={this.state.selectedUser}/>) : null}
-            </div>
+           */} </div>
         );
     }
 
