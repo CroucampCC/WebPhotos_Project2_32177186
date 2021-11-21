@@ -1,6 +1,7 @@
 package com.CC.Webphoto.source.controller;
 
 import com.CC.Webphoto.source.jwt.JwtTokenProvider;
+import com.CC.Webphoto.source.model.Product;
 import com.CC.Webphoto.source.model.Role;
 import com.CC.Webphoto.source.model.Transaction;
 import com.CC.Webphoto.source.model.User;
@@ -68,5 +69,10 @@ public class UserController {
     @GetMapping("/api/user/products")
     public ResponseEntity<?> getAllProducts(){
         return new ResponseEntity<>(productService.findAllProducts(), HttpStatus.OK);
+    }
+
+    @PostMapping("/api/user/product-create")
+    public ResponseEntity<?> createProduct(@RequestBody Product product){
+        return new ResponseEntity<>(productService.saveProduct(product), HttpStatus.CREATED);
     }
 }

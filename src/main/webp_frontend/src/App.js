@@ -23,6 +23,7 @@ import {faUser, faUserPlus, faSignInAlt, faHome, faSignOutAlt, faUserShield} fro
 import CreateUser from "./components/createuser/CreateUser";
 import {UserModal} from "./components/modals/UserModal";
 import UpdateUser from "./components/updateuser/UpdateUser";
+import CreatePhoto from "./components/home/CreatePhoto";
 
 class App extends React.Component{
   constructor(props){
@@ -121,6 +122,7 @@ class App extends React.Component{
                 <Route exact path="/401" component={Unauthorized}/>
                 <Route exact path="/create_user" component={CreateUser}/>
                 <Route exact path="/update_User/:id" component={UpdateUser}/>
+                <Route exact path="/product-create" component={CreatePhoto}/>
                 <Redirect from='*' to='/404' />
               </Switch>
             </div>

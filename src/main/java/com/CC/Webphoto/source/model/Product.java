@@ -1,5 +1,6 @@
 package com.CC.Webphoto.source.model;
 
+import liquibase.pro.packaged.C;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,4 +22,10 @@ public class Product {
 
     @Column(name="explanation")
     private String explanation;
+
+    @Column(name="url")
+    private String url;
+
+    @Column(name="Location")
+    private String location;
 }
