@@ -32,7 +32,7 @@ public class AdminController {
         return new ResponseEntity<>(userService.updateUser(user), HttpStatus.CREATED);
     }
 
-    //This can be also @DeleteMapping.
+
     @PostMapping("/api/admin/user-delete")
     public ResponseEntity<?> deleteUser(@RequestBody User user){
         userService.deleteUser(user.getId());
@@ -49,7 +49,6 @@ public class AdminController {
         Long number = userService.numberOfUsers();
         StringResponse response = new StringResponse();
         response.setResponse(number.toString());
-        //to return it, we will use String Response because long is not a suitable response for rest api
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PostMapping("/api/admin/product-create")
@@ -62,7 +61,7 @@ public class AdminController {
         return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.CREATED);
     }
 
-    //This can be also @DeleteMapping.
+
     /*@PostMapping("/api/admin/product-delete")
     public ResponseEntity<?> deleteProduct(@RequestBody Product product){
         productService.deleteProduct(product.getId());

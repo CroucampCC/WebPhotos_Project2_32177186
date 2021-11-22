@@ -66,7 +66,7 @@ class HomePage extends React.Component {
          UserService.deleteProduct(productID).then(res =>{
               this.setState({products: this.state.products.filter(product => product !== product)});
           });
-          window.location.reload(true);
+          //window.location.reload(true);
       }
 
 
